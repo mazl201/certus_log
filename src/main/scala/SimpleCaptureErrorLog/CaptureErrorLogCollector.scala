@@ -15,8 +15,7 @@ object CaptureErrorLogCollector {
     val conf = new SparkConf().setAppName("textStreamTest").setMaster("local[2]")
     val ssc = new StreamingContext(conf,Seconds(50))
 
-    val mongoClient = MongoClient("mongodb://172.16.3.246:27017")
-    val certusLogDb = mongoClient.getDatabase("certus_log")
+
 
 
 
@@ -52,13 +51,15 @@ object CaptureErrorLogCollector {
           !maybeNextLine.contains("ERROR")){
           //目前 不做 任何 处理 但是 判断 noneOrAll 是否 为空
           //将 相关 日志行 存储 为一个 mongod 数据
-          if(StringUtils.isNotBlank(maybeNextLine)){
+          if(StringUtils.isNotBlank(maybeNextLine.toString)){
             //剪取 第一部分 为简要 brief
-            var brief = maybeBuffer.substring(0,100)
+            var brief = noneOrAll.substring(0,100)
             //时间
             val time = brief.trim.split(" ")(1)
 
             val document = Document("time" -> time,"brief" -> brief,"content" -> maybeBuffer.toString)
+            val mongoClient = MongoClient("mongodb://172.16.3.247:27017")
+            val certusLogDb = mongoClient.getDatabase("certus_log")
             val collectionClient = certusLogDb.getCollection("error_log")
             val value :  Observable[Completed] = collectionClient.insertOne(document)
 
