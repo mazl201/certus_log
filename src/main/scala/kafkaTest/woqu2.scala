@@ -15,7 +15,7 @@ object woqu2 {
     val stringToString = Map[String, String]("metadata.broker.list" ->
       "106.12.10.241:9092","auto.offset.reset" -> "smallest")
 
-    val topics = Set("certuslogflume")
+    val topics = Set("basic-log")
 
     val kafkastream = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](ssc, stringToString,
       topics)

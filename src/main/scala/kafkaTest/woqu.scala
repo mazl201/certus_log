@@ -78,7 +78,7 @@ object woqu {
       Some(currentCount + previousCount)
     }
 
-    ssc.checkpoint("hdfs://")
+    ssc.checkpoint("hdfs://172.16.3.246:9000")
 
     val value = kafkastream.map(line => line._2 -> 1)
     val totalWordCounts = value.updateStateByKey[Int](addFunc)
