@@ -28,6 +28,16 @@
             <artifactId>scala-library</artifactId>
             <version>2.11.12</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mongodb.spark/mongo-spark-connector -->
+        <dependency>
+            <groupId>org.mongodb.spark</groupId>
+            <artifactId>mongo-spark-connector_2.11</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+
+
+
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_${scala.version}</artifactId>
