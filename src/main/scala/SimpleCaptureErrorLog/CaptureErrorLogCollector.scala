@@ -21,7 +21,7 @@ object CaptureErrorLogCollector {
 
     val conf = new SparkConf().setAppName("textStreamTest").setMaster("local[2]")
     val sqlSession = SparkSession.builder
-      .config("spark.mongodb.output.uri", "mongodb://172.16.3.247:27017")
+      .config("spark.mongodb.output.uri", "mongodb://106.12.28.10:27017")
       .config("spark.mongodb.output.database","certus_log")
       .config("spark.mongodb.output.collection","error_log").config(conf)
       .getOrCreate()
@@ -77,7 +77,7 @@ object CaptureErrorLogCollector {
             val time = brief.trim.split(" ")(1)
 
             val document = Document("time" -> time, "brief" -> brief, "content" -> maybeBuffer.toString)
-            val mongoClient = MongoClient("mongodb://172.16.3.247:27017")
+            val mongoClient = MongoClient("mongodb://106.12.28.10:27017")
             val certusLogDb = mongoClient.getDatabase("certus_log")
             val collectionClient = certusLogDb.getCollection("error_log")
             val value: Observable[Completed] = collectionClient.insertOne(document)
